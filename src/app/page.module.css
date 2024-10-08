@@ -5,3 +5,10 @@
   padding: 10px;
   gap: 20px;
 }
+
+.boardContainer{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

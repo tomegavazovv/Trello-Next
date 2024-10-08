@@ -3,7 +3,7 @@ import { Task as TaskType } from "../types";
 import { X } from "react-feather";
 
 import styles from "./Task.module.css";
-import { updateTaskText } from "@/service/taskService";
+import {taskService} from "@/service/taskService";
 
 type TaskProps = {
   initialTask: TaskType;
@@ -19,7 +19,7 @@ export default function Task({ initialTask, onDelete }: TaskProps) {
 
   const handleDragStart = (e: React.DragEvent<HTMLDivElement>) => {
     e.dataTransfer.setData('id', task.id);
-    e.dataTransfer.setData('fromColumn', task.column);
+    e.dataTransfer.setData('fromColumn', task.columnId);
     e.currentTarget.style.opacity = '0.3';
   }
 
@@ -45,7 +45,7 @@ export default function Task({ initialTask, onDelete }: TaskProps) {
       text: updatedText.trim(),
     };
 
-    updateTaskText(updatedTask);
+    taskService.updateTaskText(updatedTask);
     setTask(updatedTask);
   }
 

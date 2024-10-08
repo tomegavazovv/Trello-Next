@@ -6,31 +6,19 @@ import Column from "./Column/Column";
 import Spinner from "@/components/helpers/Spinner";
 
 import styles from "./Board.module.css";
-import { useBoardState } from "./useBoardState";
+import { useTasks } from "./TasksProvider";
 
 export default function Board() {
-  const {
-    columnTasks,
-    isLoading,
-    handleAddColumn,
-    handleAddTask,
-    handleDeleteTask,
-    handleDroppedInDifferentColumn,
-    handleReorderTasks
-  } = useBoardState();
+  const {columnToTasks, isLoading } = useTasks();
 
   const renderColumns = () => {
-    return (Object.keys(columnTasks)).map((column, index) => (
+    return (Object.keys(columnToTasks)).map((column, index) => (
       <Column
         key={column}
         id={column}
-        title={columnTasks[column].title}
-        tasks={columnTasks[column].tasks}
+        title={columnToTasks[column].title}
+        tasks={columnToTasks[column].tasks}
         allowAddTask={index === 0}
-        onAddTask={handleAddTask}
-        onDeleteTask={handleDeleteTask}
-        onDroppedInDifferentColumn={handleDroppedInDifferentColumn}
-        onReorderTasks={handleReorderTasks}
       />
     ))
   }

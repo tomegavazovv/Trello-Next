@@ -13,7 +13,9 @@ export default function Home() {
           <AddColumnButton />
           <LogoutButton />
         </div>
+        <div className={styles.boardContainer}>
         <Board/>
+        </div>
       </AuthWrapper>
     </div>
   );

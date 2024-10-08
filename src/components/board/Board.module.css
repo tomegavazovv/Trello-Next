@@ -1,7 +1,16 @@
-.columns{
+.columns {
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
   position: relative;
-  margin-top: 50px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+.column {
+  flex: 0 0 calc(25% - 15px);
+  margin-bottom: 20px;
+}
+

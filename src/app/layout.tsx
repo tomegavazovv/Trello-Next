@@ -1,3 +1,4 @@
+import { TasksProvider } from "@/components/board/TasksProvider";
 import "./globals.css";
 import { AuthProvider } from "@/components/auth/AuthProvider";
 
@@ -10,7 +11,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AuthProvider>
-          {children}
+          <TasksProvider>
+            {children}
+          </TasksProvider>
         </AuthProvider>
       </body>
     </html>
