@@ -1,0 +1,50 @@
+.container {
+  background-color: white;
+  border-radius: 6px;
+  padding: 12px;
+  margin-bottom: 12px;
+  cursor: move;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.2s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.text {
+  flex: 1;
+  margin-right: 12px; 
+  word-break: break-word;
+}
+
+.container:hover {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.deleteBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #d1453b;
+  color: white;
+  border: none;
+  padding: 3px 3px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10px;
+  transition: background-color 0.2s ease;
+  margin-left: 8px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.deleteBtn:hover {
+  background-color: #b03a2e;
+}
+
+
+.text[contenteditable="true"]:focus {
+  cursor: text;
+  outline: 2px solid #0079bf;
+  padding: 2px;
+}

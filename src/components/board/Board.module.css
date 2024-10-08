@@ -1,0 +1,7 @@
+.columns{
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  position: relative;
+  margin-top: 50px;
+}
