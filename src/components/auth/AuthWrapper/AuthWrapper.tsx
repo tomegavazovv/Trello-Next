@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@/components/auth/AuthProvider";
-import Spinner from "@/components/helpers/Spinner";
+import Spinner from "@/components/shared/Spinner";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -16,7 +16,7 @@ export default function AuthWrapper({ children }: { children: React.ReactNode })
   }, [user, loading, router]);
 
   if (loading) {
-    return <Spinner loading={loading} size={20} color="#000" />;
+    return <div><Spinner loading={loading} size={20} color="#000" /></div>;
   }
 
   if (!user) {

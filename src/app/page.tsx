@@ -1,4 +1,3 @@
-
 import AuthWrapper from "@/components/auth/AuthWrapper/AuthWrapper";
 import styles from "./page.module.css";
 import Board from "@/components/board/Board";
@@ -7,16 +6,16 @@ import AddColumnButton from "@/components/shared/AddColumnButton/AddColumnButton
 
 export default function Home() {
   return (
-    <div className={styles.page}>
-      <AuthWrapper>
+    <AuthWrapper>
+      <div className={styles.page}>
         <div className={styles.header}>
           <AddColumnButton />
           <LogoutButton />
         </div>
         <div className={styles.boardContainer}>
-        <Board/>
+          <Board />
         </div>
-      </AuthWrapper>
-    </div>
+      </div>
+    </AuthWrapper>
   );
 }

@@ -40,14 +40,9 @@ async function moveTaskToColumn(taskId: string, newColumnId: string, order: numb
   return await repository.updateTaskColumn(taskId, newColumnId, order);
 }
 
-async function getTasks(): Promise<TaskColumns> {
-  const user = await getCurrentUser();
-
-  if (user) {
-    console.log("Getting tasks for user", user.uid);
-    return repository.getTasks(user.uid);
-  }
-  return {} as TaskColumns;
+async function getTasks(userId: string): Promise<TaskColumns> {
+    console.log("Getting tasks for user", userId);
+    return repository.getTasks(userId);
 }
 
 function recalculateOrder(tasks: Task[]): Task[] {

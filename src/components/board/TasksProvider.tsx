@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { Task, TaskColumns } from "./types";
 import { taskService } from "@/service/taskService";
-import { generateTaskId } from "@/utils/db/db";
+import { useAuth } from "../auth/AuthProvider";
 
 type TasksContextType = {
   columnToTasks: TaskColumns;
@@ -24,29 +24,35 @@ export const TasksContext = createContext<TasksContextType>({
   reorderTasks: () => { return {} },
   moveTaskToColumn: () => { return {} as Task },
   addColumn: () => { return '' },
-  deleteColumn: () => {}
+  deleteColumn: () => { }
 });
 
 
 export const TasksProvider = ({ children }: { children: React.ReactNode }) => {
   const [columnToTasks, setColumnToTasks] = useState<TaskColumns>({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const { user } = useAuth();
 
   useEffect(() => {
     const fetchTasks = async () => {
-      setIsLoading(true);
-      try {
-        const tasks = await taskService.getTasks();
-
-        setColumnToTasks(tasks);
-      } catch (error) {
-        console.error('Error fetching tasks:', error);
-      } finally {
-        setIsLoading(false);
+      if(user){
+        console.log('fetching tasks')
+        setIsLoading(true);
+        try {
+          const tasks = await taskService.getTasks(user.uid);
+          setColumnToTasks(tasks);
+        } catch (error) {
+          console.error('Error fetching tasks:', error);
+        } finally {
+          setIsLoading(false);
+        }
+      }else{
+        setColumnToTasks({})
       }
+      
     }
     fetchTasks();
-  }, []);
+  }, [user]);
 
   const addTask = (columnId: string, text: string) => {
     const newTask: Task = {
@@ -103,7 +109,7 @@ export const TasksProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   const deleteColumn = (columnId: string) => {
-    const updatedColumnTasks = {...columnToTasks}
+    const updatedColumnTasks = { ...columnToTasks }
     delete updatedColumnTasks[columnId]
     setColumnToTasks(updatedColumnTasks)
   }

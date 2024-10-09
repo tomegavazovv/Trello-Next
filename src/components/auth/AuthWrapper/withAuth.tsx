@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../AuthProvider";
-import Spinner from "@/components/helpers/Spinner";
+import Spinner from "@/components/shared/Spinner";
 
 export function withAuth<P extends object>(WrappedComponent: React.ComponentType<P>){
   return function WithAuth(props: P) {

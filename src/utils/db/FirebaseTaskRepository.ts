@@ -36,10 +36,10 @@ class FirebaseTaskRepository {
     }
 
     getTasks = async (userId: string): Promise<TaskColumns> => {
-        const columns = await this.getColumns(userId);
-        const tasksRef = collection(db, TASKS_COLLECTION);
-        const q = query(tasksRef, where('userId', '==', userId));
-        const tasksSnapshot = await getDocs(q);
+        const [columns, tasksSnapshot] = await Promise.all([
+            this.getColumns(userId),
+            getDocs(query(collection(db, TASKS_COLLECTION), where('userId', '==', userId)))
+        ]);
 
         const tasks: TaskColumns = {};
 

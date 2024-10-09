@@ -18,11 +18,5 @@ export type TaskColumns = {
   }
 }
 
-const defaultColumnTasks: TaskColumns = {
-  
-}
 
-export const getEmptyColumnTasks = (): TaskColumns => {
-  return JSON.parse(JSON.stringify(defaultColumnTasks));
-}
 

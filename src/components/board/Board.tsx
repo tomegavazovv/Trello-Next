@@ -3,7 +3,7 @@
 import React from "react";
 
 import Column from "./Column/Column";
-import Spinner from "@/components/helpers/Spinner";
+import Spinner from "@/components/shared/Spinner";
 
 import styles from "./Board.module.css";
 import { useTasks } from "./TasksProvider";
@@ -24,7 +24,7 @@ export default function Board() {
   }
 
   if (isLoading) {
-    return <div className={styles.loading}><Spinner loading={isLoading} size={20} color="#000" /></div>
+    return <div className={styles.loadingContainer}><Spinner speedMultiplier={1} loading={isLoading} size={40} color="#000" /></div>
   }
 
   return (

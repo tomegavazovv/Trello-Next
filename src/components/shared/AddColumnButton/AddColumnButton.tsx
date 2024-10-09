@@ -25,7 +25,6 @@ export default function AddColumnButton() {
     setIsOpen(false)
     setNewColumnTitle('')
     const id = addColumn(newColumnTitle);
-    console.log(id)
     taskService.addColumn(user!.uid, newColumnTitle, id);
   }
 
