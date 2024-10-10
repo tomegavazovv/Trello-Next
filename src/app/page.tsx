@@ -1,19 +1,19 @@
-import AuthWrapper from "@/components/auth/AuthWrapper/AuthWrapper";
 import styles from "./page.module.css";
-import Board from "@/components/board/Board";
-import LogoutButton from "@/components/shared/LogoutButton/LogoutButton";
-import AddColumnButton from "@/components/shared/AddColumnButton/AddColumnButton";
+import { AuthWrapper } from "@/auth/context/firebase";
+import NewColumnButton from "@/components/new-column-button";
+import LogoutButton from "@/components/logout-button";
+import { BoardView } from "@/sections/board/view";
 
 export default function Home() {
   return (
     <AuthWrapper>
       <div className={styles.page}>
         <div className={styles.header}>
-          <AddColumnButton />
+          <NewColumnButton />
           <LogoutButton />
         </div>
         <div className={styles.boardContainer}>
-          <Board />
+          <BoardView />
         </div>
       </div>
     </AuthWrapper>

@@ -1,6 +1,8 @@
-import { TasksProvider } from "@/components/board/TasksProvider";
-import "./globals.css";
-import { AuthProvider } from "@/components/auth/AuthProvider";
+import { TasksProvider } from '@/components/column/context';
+import './globals.css';
+import { AuthProvider } from '@/auth/context/firebase/auth-provider';
+import MuiThemeProvider from '@/theme';
+import { Box } from '@mui/material';
 
 export default function RootLayout({
   children,
@@ -8,13 +10,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <body>
-        <AuthProvider>
-          <TasksProvider>
-            {children}
-          </TasksProvider>
-        </AuthProvider>
+          <AuthProvider>
+            <TasksProvider>
+              <MuiThemeProvider>{children}</MuiThemeProvider>
+            </TasksProvider>
+          </AuthProvider>
       </body>
     </html>
   );

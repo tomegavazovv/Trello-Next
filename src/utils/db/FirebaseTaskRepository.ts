@@ -1,8 +1,8 @@
 import { db } from '../../lib/firebaseConfig';
 import { collection, deleteDoc, doc, updateDoc, getDocs, serverTimestamp, writeBatch, getDoc, query, where, setDoc } from 'firebase/firestore';
-import { Task, TaskColumns } from '@/components/board/types';
-import { Column, TaskInput } from '@/components/board/Column/types';
 
+import { Task, TaskColumns, TaskInput } from '@/types/task';
+import { Column } from '@/types/column';
 const TASKS_COLLECTION = 'tasks';
 const COLUMNS_COLLECTION = 'columns';
 

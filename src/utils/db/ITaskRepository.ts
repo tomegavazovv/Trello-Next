@@ -1,4 +1,4 @@
-import { TaskInput } from "@/components/board/Column/types";
+import { TaskInput } from "@/sections/board/view/types";
 import { Task, TaskColumns } from "@/components/board/types";
 
 interface ITaskRepository {
