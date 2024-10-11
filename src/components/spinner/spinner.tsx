@@ -7,13 +7,11 @@ const override: CSSProperties = {
 };
 
 export default function Spinner({
-  loading,
   size = 14,
   color = "#000",
   speedMultiplier = 1
 }:
   {
-    loading: boolean,
     size?: number,
     color?: string,
     speedMultiplier?: number
@@ -21,7 +19,7 @@ export default function Spinner({
 
   return <ClipLoader
     cssOverride={override}
-    loading={loading}
+    loading={true}
     size={size}
     color={color}
     speedMultiplier={speedMultiplier}

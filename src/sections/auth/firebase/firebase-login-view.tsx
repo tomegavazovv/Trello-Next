@@ -6,19 +6,14 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 import LoginIcon from '@mui/icons-material/Login';
-import styles from './auth-form.module.css';
 import {
   Alert,
   Box,
-  FormControl,
-  FormGroup,
-  FormLabel,
-  TextField,
   Link as MuiLink,
   Typography,
   Divider,
 } from '@mui/material';
-import { StyledAuthButton, StyledFormCard, StyledTextField } from './styles';
+import { StyledAuthButton, StyledAuthCard, StyledTextField } from './styles';
 
 export default function FirebaseLoginView() {
   const { login, user } = useAuth();
@@ -59,7 +54,7 @@ export default function FirebaseLoginView() {
   };
 
   return (
-    <StyledFormCard>
+    <StyledAuthCard>
       <Typography textAlign='center' fontWeight='bold' variant='h4' mb={2}>
         Login
       </Typography>
@@ -118,6 +113,6 @@ export default function FirebaseLoginView() {
           </MuiLink>
         </Typography>
       </Box>
-    </StyledFormCard>
+    </StyledAuthCard>
   );
 }

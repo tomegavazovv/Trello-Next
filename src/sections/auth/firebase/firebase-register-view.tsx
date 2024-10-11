@@ -1,11 +1,12 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
-import styles from './auth-form.module.css';
-import { useAuth } from "@/auth/context/firebase/auth-provider";
-import { validateEmail, validatePassword } from "./validators";
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { useAuth } from '@/auth/context/firebase/auth-provider';
+import { validateEmail, validatePassword } from './validators';
+import { StyledAuthButton, StyledAuthCard, StyledTextField } from './styles';
+import { Alert, Box, Divider, Typography, Link as MuiLink } from '@mui/material';
 
 export default function FirebaseRegisterView() {
   const router = useRouter();
@@ -14,9 +15,9 @@ export default function FirebaseRegisterView() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    confirmPassword: ""
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +28,7 @@ export default function FirebaseRegisterView() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      setErrorMessage("Passwords do not match.");
+      setErrorMessage('Passwords do not match.');
       return;
     }
 
@@ -42,12 +43,12 @@ export default function FirebaseRegisterView() {
     try {
       setIsLoading(true);
       await register(formData.email, formData.password);
-      router.push("/");
+      router.push('/');
     } catch (error: any) {
       if (error.code === 'auth/email-already-in-use') {
-        setErrorMessage("Email already in use. Please use a different email.");
+        setErrorMessage('Email already in use. Please use a different email.');
       } else {
-        setErrorMessage("An unknown error occurred. Please try again.");
+        setErrorMessage('An unknown error occurred. Please try again.');
       }
     } finally {
       setIsLoading(false);
@@ -55,22 +56,77 @@ export default function FirebaseRegisterView() {
   };
 
   return (
-    <div className={styles.formContainer}>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.formGroup}>
-          <input value={formData.email} type="email" id="email" placeholder="Email" onChange={handleChange} />
-        </div>
-        <div className={styles.formGroup}>
-          <input value={formData.password} type="password" id="password" placeholder="Password" onChange={handleChange} />
-        </div>
-        <div className={styles.formGroup}>
-          <input value={formData.confirmPassword} type="password" id="confirmPassword" placeholder="Confirm Password" onChange={handleChange} />
-        </div>
-        {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
-        <button type="submit" className={styles.button} disabled={isLoading}>{isLoading ? 'Submitting...' : 'Login'}</button>
-        <p className={styles.alternateText}>Already have an account? <Link href="/login"><span className={styles.alternateLink}>Login here</span></Link></p>
-      </form>
-    </div>
+    <StyledAuthCard>
+      <Typography textAlign='center' fontWeight='bold' variant='h4' mb={2}>
+        Register
+      </Typography>
+      <Divider />
+
+      <Box mt={2} component='form' onSubmit={handleSubmit}>
+        <StyledTextField
+          value={formData.email}
+          type='email'
+          id='email'
+          onChange={handleChange}
+          required
+          variant='outlined'
+          label='Email'
+          size='small'
+          margin='normal'
+        />
+        <StyledTextField
+          value={formData.password}
+          type='password'
+          onChange={handleChange}
+          id='password'
+          required
+          variant='outlined'
+          label='Password'
+          size='small'
+          margin='normal'
+        />
+
+        <StyledTextField
+          value={formData.confirmPassword}
+          type='password'
+          id='confirmPassword'
+          required
+          onChange={handleChange}
+          variant='outlined'
+          label='Confirm Password'
+          size='small'
+          margin='normal'
+        />
+
+        {errorMessage && (
+          <Alert severity='error' sx={{ mt: 2, mb: 1, fontWeight: '500' }}>
+            {errorMessage}
+          </Alert>
+        )}
+
+       <StyledAuthButton
+          loading={isLoading}
+          type='submit'
+          size='large'
+          variant='contained'
+          fullWidth
+          sx={{ mt: 2, mb: 2 }}
+        >
+          Register
+        </StyledAuthButton>
+        <Typography variant='body2' align='center'>
+          Already have an account?{' '}
+          <MuiLink
+            sx={{ fontWeight: '600' }}
+            component={Link}
+            href='/login'
+            underline='hover'
+            color='secondary'
+          >
+            Login here
+          </MuiLink>
+        </Typography>
+      </Box>
+    </StyledAuthCard>
   );
 }

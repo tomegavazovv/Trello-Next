@@ -1,37 +1,33 @@
-"use client";
+'use client';
 
-import React from "react";
+import React from 'react';
 
-
-import styles from "./Board.module.css";
-import Column from "../../../components/column/column";
-import Spinner  from "@/components/spinner";
-import { useTasksContext } from "@/components/column/context";
+import Column from '../../../components/column/column';
+import { useTasksContext } from '@/components/column/context';
+import { Box, Grid2 as Grid } from '@mui/material';
+import LoadingScreen from '@/components/loading-screen';
 
 export default function Board() {
-  const {columnToTasks, isLoading } = useTasksContext();
-
-  const renderColumns = () => {
-    return (Object.keys(columnToTasks)).map((column, index) => (
-      <Column
-        key={column}
-        id={column}
-        title={columnToTasks[column].title}
-        tasks={columnToTasks[column].tasks}
-        allowAddTask={index === 0}
-      />
-    ))
-  }
+  const { columnToTasks, isLoading } = useTasksContext();
 
   if (isLoading) {
-    return <div className={styles.loadingContainer}><Spinner speedMultiplier={1} loading={isLoading} size={40} color="#000" /></div>
+    return <LoadingScreen/>
   }
 
   return (
-    <div className={styles.board}>
-      <div className={styles.columns}>
-        {renderColumns()}
-      </div>
-    </div>
+    <Box sx={{ flexGrow: 1}}>
+      <Grid container spacing={4} display={'flex'} justifyContent={'center'} >
+      {Object.keys(columnToTasks).map((column, index) => (
+        <Grid sx={{display: 'flex'}}>
+          <Column
+          id={column}
+          title={columnToTasks[column].title}
+          tasks={columnToTasks[column].tasks}
+          allowAddTask={index === 0}
+        />
+        </Grid>
+      ))}
+      </Grid>
+    </Box>
   );
 }

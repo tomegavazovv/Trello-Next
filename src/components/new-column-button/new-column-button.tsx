@@ -1,46 +1,73 @@
-"use client"
+'use client';
 
-import { useState } from "react";
-import styles from "./new-column-button.module.css";
-import { Plus } from 'react-feather'
-import Modal from "../modal/modal";
-import { taskService } from "@/service/taskService";
-import { useAuthContext } from "@/auth/hooks/use-auth-context";
-import { useTasksContext } from "../column/context";
+import { useState } from 'react';
+import Modal from '../modal/modal';
+import { taskService } from '@/service/taskService';
+import { useAuthContext } from '@/auth/hooks/use-auth-context';
+import { useTasksContext } from '../column/context';
+import { Box, Button, TextField } from '@mui/material';
+import { Add } from '@mui/icons-material';
 
-export default function NewColumnButton() {
+export default function AddColumnButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const [newColumnTitle, setNewColumnTitle] = useState("");
+  const [newColumnTitle, setNewColumnTitle] = useState('');
   const { user } = useAuthContext();
-  const { addColumn } = useTasksContext()
-
+  const { addColumn } = useTasksContext();
 
   const handleClick = () => {
     setIsOpen(true);
-  }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    setIsOpen(false)
-    setNewColumnTitle('')
+    setIsOpen(false);
+    setNewColumnTitle('');
     const id = addColumn(newColumnTitle);
     taskService.addColumn(user!.uid, newColumnTitle, id);
-  }
+  };
 
   if (isOpen) {
-    return <Modal onClose={() => setIsOpen(false)}>
-      <form onSubmit={handleSubmit} className={styles.modalContent}>
-        <input value={newColumnTitle} type="text" placeholder="New Column Title" onChange={(e) => setNewColumnTitle(e.target.value)} />
-        <button type="submit" disabled={!newColumnTitle} className={styles.addColumnModalButton}>Add Column</button>
-      </form>
-    </Modal>
+    return (
+      <Modal onClose={() => setIsOpen(false)}>
+        <Box
+          display={'flex'}
+          flexDirection={'column'}
+          gap={1}
+          width={'300px'}
+          alignItems={'center'}
+          component='form'
+          onSubmit={handleSubmit}
+        >
+          <TextField
+            size='small'
+            value={newColumnTitle}
+            fullWidth
+            type='text'
+            label='New Column Name'
+            onChange={(e) => setNewColumnTitle(e.target.value)}
+          />
+          <Button
+            variant='contained'
+            fullWidth
+            type='submit'
+            disabled={!newColumnTitle}
+          >
+            Add Column
+          </Button>
+        </Box>
+      </Modal>
+    );
   }
 
   return (
-    <button className={`${styles.button} ${styles.addColumnButton}`} onClick={handleClick}>
-      <Plus size={16} className={styles.icon} />
-      <span className={styles.buttonText}>Add Column</span>
-    </button>
-  )
+    <Button
+      endIcon={<Add />}
+      color='secondary'
+      variant='contained'
+      onClick={handleClick}
+    >
+      Add Column
+    </Button>
+  );
 }

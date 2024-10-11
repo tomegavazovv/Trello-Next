@@ -1,9 +1,10 @@
 "use client";
 
-import styles from "./logout-button.module.css";
 import { useAuthContext } from "@/auth/hooks/use-auth-context";
+import Logout from '@mui/icons-material/Logout'
+import { Button } from "@mui/material";
 
 export default function LogoutButton() {
   const { logout } = useAuthContext();
-  return <button className={styles.logout} onClick={logout}>Logout</button>
+  return <Button endIcon={<Logout/>} variant="contained" onClick={logout}>Logout</Button>
 }

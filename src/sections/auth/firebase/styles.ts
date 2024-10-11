@@ -7,9 +7,12 @@ export const StyledAuthButton = styled(LoadingButton)(({ theme }) => ({
   fontWeight: 600,
   width: '100%',
   backgroundColor: theme.palette.primary.main,
-  color: theme.palette.primary.contrastText,
+  color: 'white',
   '&:hover': {
     backgroundColor: theme.palette.primary.light,
+  },
+  '& .MuiCircularProgress-root': {
+    color: 'white',
   },
 }));
 
@@ -29,7 +32,7 @@ export const StyledTextField = styled(TextField)(({theme}) => ({
   },
 }))
 
-export const StyledFormCard = styled(Box)(({theme}) => ({
+export const StyledAuthCard = styled(Box)(({theme}) => ({
   maxWidth: 400,
   margin: 'auto',
   padding: theme.spacing(5),
