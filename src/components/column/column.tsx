@@ -5,7 +5,6 @@ import AddTask from './add-task-form';
 import { getNearestElementByMouseY } from '@/utils/dom/getNearestElementByMouseY';
 import { taskService } from '@/service/taskService';
 import Modal from '@/components/modal/modal';
-import { X } from 'react-feather';
 import { useAuthContext } from '@/auth/hooks/use-auth-context';
 import { useTasksContext } from './context';
 import {

@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { taskService } from "@/service/taskService";
-import { useAuth } from "@/auth/context/firebase/auth-provider";
+import { useAuthContext } from "@/auth/hooks/use-auth-context";
 import { TasksContext } from "./tasks-context";
 import { Task, TaskColumns } from "@/types/task";
 
@@ -12,7 +12,7 @@ import { Task, TaskColumns } from "@/types/task";
 export const TasksProvider = ({ children }: { children: React.ReactNode }) => {
   const [columnToTasks, setColumnToTasks] = useState<TaskColumns>({});
   const [isLoading, setIsLoading] = useState(true);
-  const { user } = useAuth();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const fetchTasks = async () => {

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuthContext } from "@/auth/hooks/use-auth-context";
-import Spinner from "@/components/spinner";
+import LoadingScreen from "@/components/loading-screen";
 
 export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuthContext();
@@ -16,7 +16,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   }, [user, loading, router]);
 
   if (loading) {
-    return <div><Spinner loading={loading} size={20} color="#000" /></div>;
+    return <LoadingScreen/>
   }
 
   if (!user) {

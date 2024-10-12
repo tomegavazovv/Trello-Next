@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useAuth } from '../../../auth/context/firebase/auth-provider';
+import { useAuthContext } from '@/auth/hooks/use-auth-context';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
@@ -16,7 +16,7 @@ import {
 import { StyledAuthButton, StyledAuthCard, StyledTextField } from './styles';
 
 export default function FirebaseLoginView() {
-  const { login, user } = useAuth();
+  const { login, user } = useAuthContext();
   const router = useRouter();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);

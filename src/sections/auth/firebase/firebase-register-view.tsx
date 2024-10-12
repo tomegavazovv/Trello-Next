@@ -3,14 +3,14 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useAuth } from '@/auth/context/firebase/auth-provider';
+import { useAuthContext } from '@/auth/hooks/use-auth-context';
 import { validateEmail, validatePassword } from './validators';
 import { StyledAuthButton, StyledAuthCard, StyledTextField } from './styles';
 import { Alert, Box, Divider, Typography, Link as MuiLink } from '@mui/material';
 
 export default function FirebaseRegisterView() {
   const router = useRouter();
-  const { register } = useAuth();
+  const { register } = useAuthContext();
 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);

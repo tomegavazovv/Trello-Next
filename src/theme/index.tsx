@@ -4,7 +4,6 @@ import { useMemo } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import palette from './palette';
 import { createTheme, ThemeOptions, ThemeProvider } from '@mui/material/styles';
-import { cursorTo } from 'readline';
 
 type Props = {
   children: React.ReactNode;
@@ -22,7 +21,7 @@ export default function MuiThemeProvider({ children }: Props) {
       components: {
         MuiButton: {
           styleOverrides: {
-            root: {
+            contained: {
               textTransform: 'none',
               fontWeight: 600,
               '&.Mui-disabled': {
