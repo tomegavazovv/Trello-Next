@@ -129,9 +129,11 @@ function Column({ id, title, tasks, allowAddTask }: ColumnProps) {
           {title}
         </Typography>
         <IconButton color='primary' onClick={toggleModal}>
-          <Delete sx={{
-            fontSize: '20px'
-          }}/>
+          <Delete
+            sx={{
+              fontSize: '20px',
+            }}
+          />
         </IconButton>
       </Box>
       <Stack spacing={2}>
@@ -146,7 +148,11 @@ function Column({ id, title, tasks, allowAddTask }: ColumnProps) {
           ))}
       </Stack>
 
-      {allowAddTask && <Box mt={2}><AddTask addTask={handleAddTask} /></Box>}
+      {allowAddTask && (
+        <Box mt={2}>
+          <AddTask addTask={handleAddTask} />
+        </Box>
+      )}
       {isModalOpen && renderModal()}
     </Paper>
   );

@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
-import { useAuthContext } from "@/auth/hooks/use-auth-context";
-import LoadingScreen from "@/components/loading-screen";
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
+import { useAuthContext } from '@/auth/hooks/use-auth-context';
+import LoadingScreen from '@/components/loading-screen';
 
 export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuthContext();
@@ -11,21 +11,17 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push("/login");
+      router.push('/login');
     }
   }, [user, loading, router]);
 
   if (loading) {
-    return <LoadingScreen/>
+    return <LoadingScreen />;
   }
 
   if (!user) {
     return null;
   }
 
-  return (
-    <div>
-      {children}
-    </div>
-  );
-}
+  return <div>{children}</div>;
+};

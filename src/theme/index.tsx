@@ -35,6 +35,19 @@ export default function MuiThemeProvider({ children }: Props) {
             },
             
           }
+        },
+        MuiInputAdornment: {
+          defaultProps: {
+            position: 'end',
+          },
+          styleOverrides: {
+            root: {
+              color: 'rgba(0, 0, 0, 0.4)',
+              '& .MuiSvgIcon-root': {
+                fontSize: '20px',
+              },
+            },
+          },
         }
       }
     }),

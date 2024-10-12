@@ -1,13 +1,21 @@
-import { useEffect, useRef } from "react";
-import { createPortal } from "react-dom";
-import { Box, styled } from "@mui/material";
+import { useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
+import { Box, styled } from '@mui/material';
 
-export default function Modal({ children, onClose }: { children: React.ReactNode, onClose: () => void }) {
-  const modalRoot = useRef(document.getElementById("modal-root") || document.createElement("div"));
+export default function Modal({
+  children,
+  onClose,
+}: {
+  children: React.ReactNode;
+  onClose: () => void;
+}) {
+  const modalRoot = useRef(
+    document.getElementById('modal-root') || document.createElement('div')
+  );
 
   useEffect(() => {
-    if (!document.getElementById("modal-root")) {
-      modalRoot.current.id = "modal-root";
+    if (!document.getElementById('modal-root')) {
+      modalRoot.current.id = 'modal-root';
       document.body.appendChild(modalRoot.current);
     }
 
@@ -18,10 +26,11 @@ export default function Modal({ children, onClose }: { children: React.ReactNode
     };
   }, []);
 
+
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     onClose();
-  }
+  };
 
   return createPortal(
     <ModalBox onClick={handleClick}>
@@ -33,7 +42,7 @@ export default function Modal({ children, onClose }: { children: React.ReactNode
   );
 }
 
-const ModalBox = styled(Box)(({theme}) => (({
+const ModalBox = styled(Box)(({ theme }) => ({
   position: 'absolute',
   top: '0',
   left: '0',
@@ -43,11 +52,11 @@ const ModalBox = styled(Box)(({theme}) => (({
   backgroundColor: 'rgba(0, 0, 0, 0.5)',
   display: 'flex',
   justifyContent: 'center',
-  alignItems: 'center'
-})))
+  alignItems: 'center',
+}));
 
-const ModalContentWrapper = styled(Box)(({theme}) => (({
+const ModalContentWrapper = styled(Box)(({ theme }) => ({
   backgroundColor: '#fff',
   padding: '20px',
-  borderRadius: '5px'
-})))
+  borderRadius: '5px',
+}));

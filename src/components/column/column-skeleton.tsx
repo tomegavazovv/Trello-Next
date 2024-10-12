@@ -19,16 +19,16 @@ function ColumnSkeleton() {
         alignItems='center'
         mb={2}
       >
-        <Skeleton variant="text" width={120} height={32} />
-        <Skeleton variant="circular" width={24} height={24} />
+        <Skeleton variant='text' width={120} height={32} />
+        <Skeleton variant='circular' width={24} height={24} />
       </Box>
       <Stack spacing={2}>
         {[...Array(3)].map((_, index) => (
-          <Skeleton key={index} variant="rectangular" height={40} />
+          <Skeleton key={index} variant='rectangular' height={40} />
         ))}
       </Stack>
       <Box mt={2}>
-        <Skeleton variant="rectangular" height={40} />
+        <Skeleton variant='rectangular' height={40} />
       </Box>
     </Paper>
   );

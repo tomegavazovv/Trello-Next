@@ -26,7 +26,7 @@ export const StyledTextField = styled(TextField)(({theme}) => ({
     },
    
     '&.Mui-focused fieldset': {
-      borderColor: 'rgba(0, 0, 0, 0.8)', // Change focused color and opacity
+      borderColor: 'rgba(0, 0, 0, 0.8)',
       borderWidth: '1.5px'
     },
   },

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import { Box } from '@mui/material';
 import Header from './header';
 import LoadingScreen from '@/components/loading-screen';
@@ -11,10 +11,10 @@ export default function MainLayout({
 }) {
   const { user, loading } = useAuthContext();
 
-	if(loading) {
-		return <LoadingScreen/>
-	}
-	
+  if (loading) {
+    return <LoadingScreen />;
+  }
+
   return (
     <Box sx={{ maxWidth: '1400px', padding: '24px 48px' }}>
       {user && <Header />}

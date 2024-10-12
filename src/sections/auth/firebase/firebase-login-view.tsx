@@ -12,8 +12,15 @@ import {
   Link as MuiLink,
   Typography,
   Divider,
+  InputAdornment,
+  IconButton,
 } from '@mui/material';
 import { StyledAuthButton, StyledAuthCard, StyledTextField } from './styles';
+import {
+  EmailOutlined,
+  VisibilityOutlined,
+  VisibilityOffOutlined,
+} from '@mui/icons-material';
 
 export default function FirebaseLoginView() {
   const { login, user } = useAuthContext();
@@ -25,7 +32,7 @@ export default function FirebaseLoginView() {
     email: '',
     password: '',
   });
-
+  const [showPassword, setShowPassword] = useState(false);
   useEffect(() => {
     if (user) {
       router.push('/');
@@ -71,10 +78,19 @@ export default function FirebaseLoginView() {
           label='Email'
           size='small'
           margin='normal'
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position='end'>
+                  <EmailOutlined />
+                </InputAdornment>
+              ),
+            },
+          }}
         />
         <StyledTextField
           value={formData.password}
-          type='password'
+          type={showPassword ? 'text' : 'password'}
           id='password'
           onChange={handleChange}
           required
@@ -83,6 +99,21 @@ export default function FirebaseLoginView() {
           label='Password'
           size='small'
           margin='normal'
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment onClick={() => setShowPassword(!showPassword)} position='end'>
+                  <IconButton sx={{ p: 0, m: 0 }}>
+                    {showPassword ? (
+                      <VisibilityOutlined />
+                    ) : (
+                      <VisibilityOffOutlined />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            },
+          }}
         />
         {errorMessage && (
           <Alert severity='error' sx={{ mt: 2, mb: 1, fontWeight: '500' }}>

@@ -6,12 +6,14 @@ import Link from 'next/link';
 import { useAuthContext } from '@/auth/hooks/use-auth-context';
 import { validateEmail, validatePassword } from './validators';
 import { StyledAuthButton, StyledAuthCard, StyledTextField } from './styles';
-import { Alert, Box, Divider, Typography, Link as MuiLink } from '@mui/material';
+import { Alert, Box, Divider, Typography, Link as MuiLink, InputAdornment, IconButton } from '@mui/material';
+import { EmailOutlined, VisibilityOffOutlined, VisibilityOutlined } from '@mui/icons-material';
 
 export default function FirebaseRegisterView() {
   const router = useRouter();
   const { register } = useAuthContext();
 
+  const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -73,10 +75,19 @@ export default function FirebaseRegisterView() {
           label='Email'
           size='small'
           margin='normal'
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position='end'>
+                  <EmailOutlined />
+                </InputAdornment>
+              ),
+            },
+          }}
         />
         <StyledTextField
           value={formData.password}
-          type='password'
+          type={showPassword ? 'text' : 'password'}
           onChange={handleChange}
           id='password'
           required
@@ -84,11 +95,26 @@ export default function FirebaseRegisterView() {
           label='Password'
           size='small'
           margin='normal'
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position='end' onClick={() => setShowPassword(!showPassword)}>
+                  <IconButton sx={{ p: 0, m: 0 }}>
+                    {showPassword ? (
+                      <VisibilityOutlined />
+                  ) : (
+                      <VisibilityOffOutlined />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            },
+          }}
         />
 
         <StyledTextField
           value={formData.confirmPassword}
-          type='password'
+          type={showPassword ? 'text' : 'password'}
           id='confirmPassword'
           required
           onChange={handleChange}
@@ -96,6 +122,21 @@ export default function FirebaseRegisterView() {
           label='Confirm Password'
           size='small'
           margin='normal'
+          slotProps={{
+            input: {
+              endAdornment: (
+                <InputAdornment position='end' onClick={() => setShowPassword(!showPassword)}>
+                  <IconButton sx={{ p: 0, m: 0 }}>
+                    {showPassword ? (
+                      <VisibilityOutlined />
+                    ) : (
+                      <VisibilityOffOutlined />
+                    )}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            },
+          }}
         />
 
         {errorMessage && (

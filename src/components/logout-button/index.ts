@@ -1,1 +1,1 @@
-export {default } from './logout-button';
+export { default } from './logout-button';
