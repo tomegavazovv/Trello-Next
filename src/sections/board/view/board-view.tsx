@@ -13,21 +13,11 @@ export default function Board() {
   const renderSkeleton = () => {
     return (
       <>
-        <Grid sx={{ display: 'flex' }} key={1}>
-          <ColumnSkeleton />
-        </Grid>
-        <Grid sx={{ display: 'flex' }} key={2}>
-          <ColumnSkeleton />
-        </Grid>
-        <Grid sx={{ display: 'flex' }} key={3}>
-          <ColumnSkeleton />
-        </Grid>
-        <Grid sx={{ display: 'flex' }} key={4}>
-          <ColumnSkeleton />
-        </Grid>
-        <Grid sx={{ display: 'flex' }} key={5}>
-          <ColumnSkeleton />
-        </Grid>
+        {Array.from({ length: 5 }).map((_, index) => (
+          <Grid sx={{ display: 'flex' }} key={index}>
+            <ColumnSkeleton />
+          </Grid>
+        ))}
       </>
     );
   };
