@@ -2,9 +2,14 @@
 
 import { useMemo } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
-import palette from './palette';
-import { createTheme, ThemeOptions, ThemeProvider } from '@mui/material/styles';
-
+import {
+  createTheme,
+  ThemeOptions,
+  ThemeProvider,
+} from '@mui/material/styles';
+import colorPalette from './color-palette';
+import { componentOverrides } from './overrides';
+import { merge } from 'lodash';
 type Props = {
   children: React.ReactNode;
 };
@@ -14,47 +19,15 @@ const typography = {
 };
 
 export default function MuiThemeProvider({ children }: Props) {
-  const themeOptions: ThemeOptions = useMemo(
-    () => ({
-      palette,
+  const memoizedValue = useMemo(() => {
+    return createTheme({
+      palette: colorPalette,
       typography: typography,
-      components: {
-        MuiButton: {
-          styleOverrides: {
-            contained: {
-              textTransform: 'none',
-              fontWeight: 600,
-              '&.Mui-disabled': {
-                backgroundColor: 'rgba(0,0,0,0.6)',
-                color: 'white',
-                pointerEvents: 'auto',
-              },
-              '&.Mui-disabled:hover': { 
-                cursor: 'not-allowed',
-              },
-            },
-            
-          }
-        },
-        MuiInputAdornment: {
-          defaultProps: {
-            position: 'end',
-          },
-          styleOverrides: {
-            root: {
-              color: 'rgba(0, 0, 0, 0.4)',
-              '& .MuiSvgIcon-root': {
-                fontSize: '20px',
-              },
-            },
-          },
-        }
-      }
-    }),
-    []
-  );
+    });
+  }, []);
 
-  const theme = createTheme(themeOptions);
+  const theme = createTheme(memoizedValue as ThemeOptions);
+  theme.components = merge(theme.components, componentOverrides(theme));
 
   return (
     <ThemeProvider theme={theme}>

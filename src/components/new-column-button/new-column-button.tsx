@@ -44,8 +44,9 @@ export default function AddColumnButton() {
             value={newColumnTitle}
             fullWidth
             type='text'
-            label='New Column Name'
+            label={<Box sx={{ fontSize: '12px' }}>New Column Name</Box>}
             onChange={(e) => setNewColumnTitle(e.target.value)}
+            
           />
           <Button
             variant='contained'
