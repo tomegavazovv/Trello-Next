@@ -46,6 +46,7 @@ export default function AddColumnButton() {
           />
           <Button
             variant='contained'
+            color='secondary'
             fullWidth
             type='submit'
             disabled={!newColumnTitle}
