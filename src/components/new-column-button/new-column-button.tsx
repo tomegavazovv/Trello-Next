@@ -2,17 +2,14 @@
 
 import { useState } from 'react';
 import Modal from '../modal/modal';
-import { taskService } from '@/service/taskService';
-import { useAuthContext } from '@/auth/hooks/use-auth-context';
-import { useTasksContext } from '../column/context';
 import { Box, Button, TextField } from '@mui/material';
 import { Add } from '@mui/icons-material';
+import { useMutateColumnTasks } from '../column/hooks/use-mutate-column-tasks';
 
 export default function AddColumnButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [newColumnTitle, setNewColumnTitle] = useState('');
-  const { user } = useAuthContext();
-  const { addColumn } = useTasksContext();
+  const {addColumn} = useMutateColumnTasks();
 
   const handleClick = () => {
     setIsOpen(true);
@@ -23,8 +20,7 @@ export default function AddColumnButton() {
 
     setIsOpen(false);
     setNewColumnTitle('');
-    const id = addColumn(newColumnTitle);
-    taskService.addColumn(user!.uid, newColumnTitle, id);
+    addColumn.mutate(newColumnTitle);
   };
 
   if (isOpen) {

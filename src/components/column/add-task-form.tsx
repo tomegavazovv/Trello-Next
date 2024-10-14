@@ -2,17 +2,17 @@ import { Box, Button, TextField } from '@mui/material';
 import { useState } from 'react';
 
 type AddTaskProps = {
-  addTask: (task: string) => void;
+  onAddTask: (task: string) => void;
 };
 
-export default function AddTask({ addTask }: AddTaskProps) {
+export default function AddTask({ onAddTask }: AddTaskProps) {
   const [taskText, setTaskText] = useState('');
 
   const handleSubmit = (
     e: React.FormEvent<HTMLFormElement> | React.KeyboardEvent<HTMLDivElement>
   ) => {
     e.preventDefault();
-    addTask(taskText);
+    onAddTask(taskText);
     setTaskText('');
   };
 

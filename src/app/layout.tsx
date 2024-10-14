@@ -1,7 +1,14 @@
-import { TasksProvider } from '@/components/column/context';
+'use client';
+
+import { AlertProvider } from '@/components/alert-card/context/alert-provider';
 import '../globals.css';
 import { AuthProvider } from '@/auth/context/firebase/auth-provider';
 import MuiThemeProvider from '@/theme';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+const queryClient = new QueryClient();
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -10,13 +17,16 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body>
-        <AuthProvider>
-          <TasksProvider>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
             <MuiThemeProvider>
-                {children}
+              <AlertProvider>{children}</AlertProvider>
             </MuiThemeProvider>
-          </TasksProvider>
-        </AuthProvider>
+          </AuthProvider>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+        <div id='alert-root' />
+        <div id='modal-root' />
       </body>
     </html>
   );

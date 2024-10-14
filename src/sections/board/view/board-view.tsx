@@ -3,12 +3,12 @@
 import React from 'react';
 
 import { Column } from '../../../components/column';
-import { useTasksContext } from '@/components/column/context';
 import { Box, Grid2 as Grid } from '@mui/material';
 import { ColumnSkeleton } from '@/components/column';
+import { useColumnTasks } from '@/components/column/hooks/use-column-tasks';
 
 export default function Board() {
-  const { columnToTasks, isLoading } = useTasksContext();
+  const { columnToTasks, isLoading } = useColumnTasks();
 
   const renderSkeleton = () => {
     return (
@@ -23,12 +23,12 @@ export default function Board() {
   };
 
   const renderColumns = () => {
-    return Object.keys(columnToTasks).map((column, index) => (
-      <Grid sx={{ display: 'flex' }} key={column}>
+    return Object.keys(columnToTasks).map((columnId, index) => (
+      <Grid sx={{ display: 'flex' }} key={columnId}>
         <Column
-          id={column}
-          title={columnToTasks[column].title}
-          tasks={columnToTasks[column].tasks}
+          id={columnId}
+          title={columnToTasks[columnId].title}
+          tasks={columnToTasks[columnId].tasks}
           allowAddTask={index === 0}
         />
       </Grid>

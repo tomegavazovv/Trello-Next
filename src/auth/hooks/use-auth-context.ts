@@ -12,3 +12,9 @@ export const useAuthContext = () => {
 
   return context;
 };
+
+export const useAuthenticatedUser = () => {
+  const { user } = useAuthContext();
+  if (!user) throw new Error('User is not authenticated');
+  return {user};
+};

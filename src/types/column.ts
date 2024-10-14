@@ -1,5 +1,5 @@
 export type Column = {
   id: string,
-  name: string,
+  title: string,
   order: number
 }

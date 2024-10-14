@@ -1,12 +1,8 @@
-import React, { ReactSVGElement, useState } from 'react';
-import { Task as TaskType } from '../../types/task';
+import React, { useMemo, useState } from 'react';
+import { TaskInput, Task as TaskType } from '../../types/task';
 import Task from '../task/task';
 import AddTask from './add-task-form';
 import { getNearestElementByMouseY } from '@/utils/dom/getNearestElementByMouseY';
-import { taskService } from '@/service/taskService';
-import Modal from '@/components/modal/modal';
-import { useAuthContext } from '@/auth/hooks/use-auth-context';
-import { useTasksContext } from './context';
 import {
   Box,
   Button,
@@ -16,6 +12,9 @@ import {
   Typography,
 } from '@mui/material';
 import { Delete } from '@mui/icons-material';
+import { reorderTasks } from '@/utils/task-utils';
+import { useMutateColumnTasks } from './hooks/use-mutate-column-tasks';
+import Modal from '../modal/modal';
 
 type ColumnProps = {
   id: string;
@@ -24,20 +23,28 @@ type ColumnProps = {
   allowAddTask: boolean;
 };
 
-function Column({ id, title, tasks, allowAddTask }: ColumnProps) {
-  const { addTask, deleteTask, reorderTasks, moveTaskToColumn, deleteColumn } =
-    useTasksContext();
-  const { user } = useAuthContext();
+const Column = ({ id, title, tasks, allowAddTask }: ColumnProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const {
+    addTaskToColumn,
+    deleteTaskFromColumn,
+    updateTasksOrderOfColumn,
+    moveTaskToColumn,
+    deleteColumn,
+    updateTask,
+  } = useMutateColumnTasks();
 
   const handleAddTask = (taskText: string) => {
-    const newTask = addTask(id, taskText);
-    taskService.addTask(user!.uid, newTask);
+    const newTask: TaskInput = {
+      text: taskText,
+      columnId: id,
+      order: Math.max(...tasks.map((t: TaskType) => t.order), 0) + 1,
+    };
+    addTaskToColumn.mutate(newTask);
   };
 
   const handleDeleteTask = (taskId: string) => {
-    deleteTask(id, taskId);
-    taskService.deleteTaskFromColumn(taskId);
+    deleteTaskFromColumn.mutate({ taskId, columnId: id });
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -47,12 +54,15 @@ function Column({ id, title, tasks, allowAddTask }: ColumnProps) {
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const droppedTaskId = e.dataTransfer.getData('id');
-    const fromColumn = e.dataTransfer.getData('fromColumn');
-    const toColumn = id;
+    const fromColumnId = e.dataTransfer.getData('fromColumn');
+    const toColumnId = id;
 
-    if (fromColumn !== toColumn) {
-      const task = moveTaskToColumn(fromColumn, toColumn, droppedTaskId);
-      taskService.moveTaskToColumn(droppedTaskId, toColumn, task.order);
+    if (fromColumnId !== toColumnId) {
+      moveTaskToColumn.mutate({
+        taskId: droppedTaskId,
+        toColumnId,
+        fromColumnId,
+      });
     } else {
       let targetTaskId: string | null = null;
 
@@ -62,26 +72,33 @@ function Column({ id, title, tasks, allowAddTask }: ColumnProps) {
         targetTaskId = targetTaskElement.dataset.id ?? null;
       } else {
         const mouseY = e.clientY;
-        targetTaskId = getNearestElementByMouseY('.task', mouseY).getAttribute(
+        const columnElement = e.currentTarget as HTMLElement;
+        targetTaskId = getNearestElementByMouseY('.task', mouseY, columnElement).getAttribute(
           'data-id'
         );
       }
-
       if (targetTaskId && targetTaskId !== droppedTaskId) {
-        const updatedTasks = reorderTasks(id, droppedTaskId, targetTaskId);
-        taskService.updateTasksOrder(updatedTasks[id].tasks);
+        const updatedColumnTasks = reorderTasks(
+          tasks,
+          droppedTaskId,
+          targetTaskId
+        );
+        updateTasksOrderOfColumn.mutate({ updatedColumnTasks, columnId: id });
       }
     }
   };
 
   const handleDeleteColumn = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    taskService.deleteColumn(user!.uid, id);
-    deleteColumn(id);
+    deleteColumn.mutate(id);
   };
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
+  };
+
+  const handleUpdateTask = (task: TaskType) => {
+    updateTask.mutate(task);
   };
 
   const renderModal = () => {
@@ -137,25 +154,31 @@ function Column({ id, title, tasks, allowAddTask }: ColumnProps) {
         </IconButton>
       </Box>
       <Stack spacing={2}>
-        {tasks
-          .sort((a, b) => a.order - b.order)
-          .map((task) => (
-            <Task
-              key={task.id}
-              initialTask={task}
-              onDelete={handleDeleteTask}
-            />
-          ))}
+        {tasks.map((task) => (
+          <Task
+            key={task.id}
+            initialTask={task}
+            onDelete={handleDeleteTask}
+            onUpdateTask={handleUpdateTask}
+          />
+        ))}
       </Stack>
 
       {allowAddTask && (
         <Box mt={2}>
-          <AddTask addTask={handleAddTask} />
+          <AddTask onAddTask={handleAddTask} />
         </Box>
       )}
       {isModalOpen && renderModal()}
     </Paper>
   );
-}
+};
 
-export default React.memo(Column);
+export default React.memo(Column, (prevProps, nextProps) => {
+  return (
+    prevProps.tasks.length === nextProps.tasks.length &&
+    prevProps.tasks.every(
+      (task, index) => task.id === nextProps.tasks[index].id
+    )
+  );
+});

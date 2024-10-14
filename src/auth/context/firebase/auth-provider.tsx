@@ -1,6 +1,5 @@
 'use client';
 
-import { auth } from '@/lib/firebaseConfig';
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -10,6 +9,7 @@ import {
 } from 'firebase/auth';
 import React from 'react';
 import { AuthContext } from './auth-context';
+import { auth } from '@/lib/firebase/firebaseConfig';
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = React.useState<User | null>(null);

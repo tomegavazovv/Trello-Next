@@ -3,18 +3,19 @@ import { Task, TaskColumns } from '@/types/task';
 export type TasksContextType = {
   columnToTasks: TaskColumns;
   isLoading: boolean;
-  addTask: (columnId: string, text: string) => Task;
+  addTask: (columnId: string, taskText: string) => void;
   deleteTask: (columnId: string, taskId: string) => void;
-  reorderTasks: (
+  updateTasksOrder: (
     columnId: string,
     taskId: string,
     targetTaskId: string
-  ) => TaskColumns;
+  ) => void;
   moveTaskToColumn: (
-    columnId: string,
+    fromColumnId: string,
     targetColumnId: string,
     taskId: string
-  ) => Task;
-  addColumn: (name: string) => string;
+  ) => void;
+  addColumn: (name: string) => void;
   deleteColumn: (id: string) => void;
+  updateTask: (task: Task) => void;
 };

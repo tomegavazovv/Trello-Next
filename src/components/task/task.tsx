@@ -1,18 +1,18 @@
 import React from 'react';
 
-import { taskService } from '@/service/taskService';
-import { Task as TaskType } from '../../types/task';
+import { Task as TaskType } from '@/types/task';
 import { Box, IconButton, Paper, styled, Typography } from '@mui/material';
 import Clear from '@mui/icons-material/Clear';
 
 type TaskProps = {
   initialTask: TaskType;
   onDelete: (id: string) => void;
+  onUpdateTask: (task: TaskType) => void;
 };
 
-export default function Task({ initialTask, onDelete }: TaskProps) {
+export default function Task({ initialTask, onDelete, onUpdateTask }: TaskProps) {
   const [task, setTask] = React.useState(initialTask);
-
+  
   const handleDelete = () => {
     onDelete(task.id);
   };
@@ -45,8 +45,8 @@ export default function Task({ initialTask, onDelete }: TaskProps) {
       text: updatedText.trim(),
     };
 
-    taskService.updateTaskText(updatedTask);
     setTask(updatedTask);
+    onUpdateTask(updatedTask);
   };
 
   const handleDoubleClick = (event: React.MouseEvent<HTMLDivElement>): void => {
