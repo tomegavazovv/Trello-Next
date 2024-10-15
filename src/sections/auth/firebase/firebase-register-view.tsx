@@ -98,8 +98,8 @@ export default function FirebaseRegisterView() {
           slotProps={{
             input: {
               endAdornment: (
-                <InputAdornment position='end' onClick={() => setShowPassword(!showPassword)}>
-                  <IconButton sx={{ p: 0, m: 0 }}>
+                <InputAdornment position='end' >
+                  <IconButton sx={{ p: 0, m: 0 }} onClick={() => setShowPassword(!showPassword)} tabIndex={-1}>
                     {showPassword ? (
                       <VisibilityOutlined />
                   ) : (
@@ -125,8 +125,8 @@ export default function FirebaseRegisterView() {
           slotProps={{
             input: {
               endAdornment: (
-                <InputAdornment position='end' onClick={() => setShowPassword(!showPassword)}>
-                  <IconButton sx={{ p: 0, m: 0 }}>
+                <InputAdornment position='end' >
+                  <IconButton sx={{ p: 0, m: 0 }} onClick={() => setShowPassword(!showPassword)} tabIndex={-1}>
                     {showPassword ? (
                       <VisibilityOutlined />
                     ) : (

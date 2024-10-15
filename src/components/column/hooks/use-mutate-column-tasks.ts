@@ -1,5 +1,5 @@
 import { useAuthenticatedUser } from '@/auth/hooks/use-auth-context';
-import { useAlertContext } from '@/components/alert-card/context/alert-provider';
+import { useAlertContext } from '@/components/alert-card/context';
 import { firestoreClient } from '@/lib/firebase/firestore-client';
 import { Column } from '@/types/column';
 import { Task, TaskInput } from '@/types/task';

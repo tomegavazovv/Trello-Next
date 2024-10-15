@@ -102,8 +102,8 @@ export default function FirebaseLoginView() {
           slotProps={{
             input: {
               endAdornment: (
-                <InputAdornment onClick={() => setShowPassword(!showPassword)} position='end'>
-                  <IconButton sx={{ p: 0, m: 0 }}>
+                <InputAdornment position='end' >
+                  <IconButton sx={{ p: 0, m: 0 }} onClick={() => setShowPassword(!showPassword)} tabIndex={-1}>
                     {showPassword ? (
                       <VisibilityOutlined />
                     ) : (
